@@ -1,0 +1,20 @@
+{
+  "name": "mocharunner",
+  "version": "1.0.0",
+  "description": "a mocha runner",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/bluebird": "^2.0.30",
+    "@types/express": "^4.0.30",
+    "@types/mocha": "^2.2.29",
+    "bluebird": "^3.4.1",
+    "express": "^4.14.0",
+    "mocha": "^3.0.2",
+    "typescript": "^2.1.0-dev.20160812"
+  }
+}
