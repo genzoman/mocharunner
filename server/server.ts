@@ -6,13 +6,15 @@
 // app.listen(9999,()=>{
 //   console.log("listening on port 9999");
 // });
+import * as Promise from "bluebird"
 import * as express from "express";
 var path = require("path");
 import * as ReactDOM from "react-dom";
 let app = express();
 import * as sqlite from "sqlite3";
 let db = new sqlite.Database(':memory:');
-import * as fs from "fs";
+import * as fs_ from "fs";
+const fs = Promise.promisifyAll(fs_);
 import * as request from "request";
 var runner = require("../spec/runner");
 app.use(express.static('build'));
@@ -28,13 +30,14 @@ db.serialize(() => {
 
 app.get("/api/data", (req, res) => {
   runner()
-    .then(data=>{
+    .then(data => {
       res.send(data);
     });
 });
 
-app.get("/tests",(req,res)=>{
-  res.send("hello world");
+app.get("/tests", (req, res) => {
+  return fs.readdirAsync("./spec")
+    .then(files => res.send(files));
 });
 app.get("/", (req, res) => {
   res.sendFile(path.resolve("index.html"));

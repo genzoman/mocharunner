@@ -2,12 +2,12 @@ var expect = require("chai").expect;
 var assert = require("assert");
 describe("mocha test", function () {
   it("should a", function () {
-    expect(1).to.be.equal(1);
+    assert.equal(2,2);
   });
   it("should b", function () {
-    expect(1).to.be.equal(2);
+    assert.equal(1,1);
   });
   it("should c", function () {
-    expect(1).to.be.equal(2);
+    assert.equal(1,1);
   });
 });
