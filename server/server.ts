@@ -14,6 +14,7 @@ import * as sqlite from "sqlite3";
 let db = new sqlite.Database(':memory:');
 import * as fs from "fs";
 import * as request from "request";
+var runner = require("../spec/runner");
 app.use(express.static('build'));
 
 db.serialize(() => {
@@ -23,13 +24,17 @@ db.serialize(() => {
     stmt.run("Ipsum " + i);
   }
   stmt.finalize();
-})
+});
+
 app.get("/api/data", (req, res) => {
-  db.serialize(()=>{
-    db.all("select * from myTable",(err,data)=>{
+  runner()
+    .then(data=>{
       res.send(data);
     });
-  })
+});
+
+app.get("/tests",(req,res)=>{
+  res.send("hello world");
 });
 app.get("/", (req, res) => {
   res.sendFile(path.resolve("index.html"));
