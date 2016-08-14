@@ -1,11 +1,4 @@
-// import * as express from "express";
-// let app = express();
-// app.get("/",(req, res)=>{
-//   res.send("hello world");
-// });
-// app.listen(9999,()=>{
-//   console.log("listening on port 9999");
-// });
+
 import * as Promise from "bluebird"
 import * as express from "express";
 var path = require("path");
@@ -49,13 +42,17 @@ app.get("/tests", (req, res) => {
 app.get("/", (req, res) => {
   res.sendFile(path.resolve("index.html"));
 
+
 });
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve("index.html"));
 
 app.post("/tests",(req,res)=>{
   runner("./spec/" + req.body.test)
     .then(data=>{
       res.send(data);
     })
+
 });
 
 app.listen(9999, () => {
