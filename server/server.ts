@@ -35,26 +35,24 @@ app.get("/api/data", (req, res) => {
 });
 
 app.get("/tests", (req, res) => {
-   fs.readdirAsync("./spec")
+  fs.readdirAsync("./spec")
     .then(files => res.send(files));
 });
 
 app.get("/", (req, res) => {
   res.sendFile(path.resolve("index.html"));
-
-
 });
-app.get("/", (req, res) => {
-  res.sendFile(path.resolve("index.html"));
+  app.post("/tests", (req, res) => {
+    // runner("./spec/" + req.body.test)
+    //   .then(data => {
+    //     res.send(data);
+    //   })
+    //   .catch(err => {
+    //     res.send(err);
+    //   })
+    var testPromise = runner("./spec/" + req.body.test);
+    testPromise
+      .then(data=>res.send(data));
+  });
 
-app.post("/tests",(req,res)=>{
-  runner("./spec/" + req.body.test)
-    .then(data=>{
-      res.send(data);
-    })
-
-});
-
-app.listen(9999, () => {
-  console.log("listening...");
-});
+  app.listen(9999);

@@ -4,24 +4,17 @@ var Mocha = require("mocha"),
 var Promise = require("bluebird");
 
 
-
 module.exports = doMocha;
 function doMocha(file) {
-  var mocha = new Mocha();
-  mocha.addFile(file)
-  var failures = [];
+
 
   return new Promise(resolve => {
-    mocha.run()
-      .on('test', function (test) {
-
-      })
-      .on('test end', function (test) {
-
-      })
-      .on('pass', function (test) {
-
-      })
+    var mocha = new Mocha();
+    mocha.addFile(file)
+    var failures = [];
+    mocha.run(function (failures) {
+      console.log("failures: ", failures)
+    })
       .on('fail', function (test, err) {
         failures.push({
           test: test.err,
@@ -30,8 +23,11 @@ function doMocha(file) {
       })
       .on('end', function (results) {
         console.log("DONE")
-        resolve(Object.assign({},failures));
+        mocha = null;
+        resolve(Object.assign({}, failures));
       });
+  }, reject => {
+    reject("error somewhere");
   });
 }
 

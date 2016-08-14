@@ -4,8 +4,6 @@ var body = d3.select("body")
 window.d3 = d3;
 d3.select('div')
   .on("click", function () {
-    // var test = "./spec/spec.js"
-    // getTest(test);
     getTestNames()
       .then(data => {
         var fileNames = JSON.parse(data.response);
@@ -63,7 +61,6 @@ var printFailures = function (failures) {
     .enter()
       .append("div")
       .text(function(d,i){
-        debugger;
         return d.file;
       });
 
