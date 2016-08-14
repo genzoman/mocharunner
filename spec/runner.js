@@ -3,10 +3,11 @@ var Mocha = require("mocha"),
   path = require("path");
 var Promise = require("bluebird");
 
-var mocha = new Mocha();
+
 
 module.exports = doMocha;
 function doMocha(file) {
+  var mocha = new Mocha();
   mocha.addFile(file)
   var failures = [];
 

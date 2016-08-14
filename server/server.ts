@@ -19,6 +19,7 @@ import * as request from "request";
 var runner = require("../spec/runner");
 app.use(express.static('build'));
 var bodyParser = require("body-parser");
+var App = require("../app");
 db.serialize(() => {
   db.run("create table myTable(info TEXT)");
   var stmt = db.prepare("INSERT INTO myTable VALUES (?)");
@@ -41,7 +42,7 @@ app.get("/api/data", (req, res) => {
 });
 
 app.get("/tests", (req, res) => {
-   fs.readdirAsync("./spec/spec")
+   fs.readdirAsync("./spec")
     .then(files => res.send(files));
 });
 
@@ -51,7 +52,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/tests",(req,res)=>{
-  runner("./spec.js")
+  runner("./spec/" + req.body.test)
     .then(data=>{
       res.send(data);
     })
