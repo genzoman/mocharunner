@@ -18,7 +18,7 @@ const fs = Promise.promisifyAll(fs_);
 import * as request from "request";
 var runner = require("../spec/runner");
 app.use(express.static('build'));
-
+var bodyParser = require("body-parser");
 db.serialize(() => {
   db.run("create table myTable(info TEXT)");
   var stmt = db.prepare("INSERT INTO myTable VALUES (?)");
@@ -27,6 +27,11 @@ db.serialize(() => {
   }
   stmt.finalize();
 });
+app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 
 app.get("/api/data", (req, res) => {
   runner()
@@ -36,12 +41,20 @@ app.get("/api/data", (req, res) => {
 });
 
 app.get("/tests", (req, res) => {
-  return fs.readdirAsync("./spec")
+   fs.readdirAsync("./spec/spec")
     .then(files => res.send(files));
 });
+
 app.get("/", (req, res) => {
   res.sendFile(path.resolve("index.html"));
 
+});
+
+app.post("/tests",(req,res)=>{
+  runner("./spec.js")
+    .then(data=>{
+      res.send(data);
+    })
 });
 
 app.listen(9999, () => {

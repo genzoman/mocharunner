@@ -4,10 +4,10 @@ var Mocha = require("mocha"),
 var Promise = require("bluebird");
 
 var mocha = new Mocha();
-mocha.addFile("./spec/spec.js")
-module.exports = doMocha;
-function doMocha() {
 
+module.exports = doMocha;
+function doMocha(file) {
+  mocha.addFile(file)
   var failures = [];
 
   return new Promise(resolve => {
