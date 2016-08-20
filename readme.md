@@ -1,0 +1,1 @@
+To start the server: nodemon ./server/server.js localhost 9999

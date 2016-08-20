@@ -3,11 +3,12 @@ var Mocha = require("mocha"),
   path = require("path");
 var Promise = require("bluebird");
 
-
-
 module.exports = doMocha;
 function doMocha(file) {
   var mocha = new Mocha();
+  Object.keys(require.cache).forEach(key => {
+      key.indexOf("spec") > -1 ? delete require.cache[key] : null;
+  });
   mocha.addFile(file)
   var failures = [];
 
@@ -30,7 +31,7 @@ function doMocha(file) {
       })
       .on('end', function (results) {
         console.log("DONE")
-        resolve(Object.assign({},failures));
+        resolve(Object.assign({}, failures));
       });
   });
 }
