@@ -28,10 +28,6 @@ var runTest = function (test) {
       preambleCRLF: true,
       postambleCRLF: true,
       url: "http://localhost:9999/tests",
-      prox: {
-        host: "http://localhost/",
-        port: 9999
-      },
       json: {
         "test": test
       }
@@ -53,6 +49,19 @@ function attachClickHandlers() {
       });
   });
 }
+[
+  {
+    file: "desktop/file.js",
+    onClick: function(){
+      console.log("hello");
+    }
+  },
+  {
+    file: "some place else",
+    
+      
+  }  
+]
 
 var printFailures = function (failures) {
   var failureArray = Object.keys(failures)
