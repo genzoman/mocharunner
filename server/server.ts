@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({
 
 app.get("/api/data", (req, res) => {
   runner()
-    .then(data => {
+    .then(data => {  
       res.send(data);
     });
 });
